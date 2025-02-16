@@ -237,7 +237,7 @@ def build_prompt(user_query: str, docs: list[Document]) -> str:
     including the relevant context from selected docs.
     """
     system_message = (
-        "Answer using ONLY the provided context. Cite sources as (Page X)."
+        "Answer using ONLY the provided context unless it a greeting answer normally and say how can i help you :) . Cite sources as (Page X)."
     )
     context_section = "CONTEXT:\n"
     for doc in docs:
@@ -248,9 +248,7 @@ def build_prompt(user_query: str, docs: list[Document]) -> str:
     return f"{system_message}\n\n{context_section}\nQuestion: {user_query}\nAnswer:"
 
 
-# ------------------------------------------------
-# 10. Complete RAG Pipeline
-# ------------------------------------------------
+
 def advanced_rag_pipeline(pdf_path: str, user_query: str) -> str:
     # 1. Adaptive chunking of the PDF
     docs = load_and_adaptive_chunk_pdf(pdf_path, max_chunk_size=1000)
@@ -276,9 +274,7 @@ def advanced_rag_pipeline(pdf_path: str, user_query: str) -> str:
     return answer
 
 
-# ------------------------------------------------
-# 11. Gradio Interface (Optional)
-# ------------------------------------------------
+
 def gradio_chatbot_demo(pdf_path: str):
     def chat_fn(history, query):
         response = advanced_rag_pipeline(pdf_path, query)
@@ -294,13 +290,20 @@ def gradio_chatbot_demo(pdf_path: str):
 
 
 
+def gradio_chatbot_demo(pdf_path: str):
+    def chat_fn(history, query):
+        response = advanced_rag_pipeline(pdf_path, query)
+        history.append((query, response))
+        return history, ""
+    
+    with gr.Blocks() as demo:
+        gr.Markdown("# PDF Chatbot (Page Number Citations) with Caching & Adaptive Chunking")
+        chatbot = gr.Chatbot()
+        query_box = gr.Textbox(label="Ask about the PDF")
+        # Use submit method to update the chatbot based on user input
+        query_box.submit(chat_fn, [chatbot, query_box], [chatbot, query_box])
+    demo.launch()
+
 if __name__ == "__main__":
     PDF_PATH = "Umbrella Corporation Employee Handbook.pdf"
-
-    # Quick test
-    test_query = "What's the Gift and Entertainment Policy for the company?"
-    print("User Query:", test_query)
-    print("Answer:", advanced_rag_pipeline(PDF_PATH, test_query))
-
-    # Uncomment to run the Gradio demo:
-    # gradio_chatbot_demo(PDF_PATH)
+    gradio_chatbot_demo(PDF_PATH)
