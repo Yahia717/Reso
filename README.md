@@ -1,8 +1,6 @@
-# PDF Chatbot with RAG Pipeline
+# RAG
 
-This repository contains a custom implementation of a Retrieval-Augmented Generation (RAG) pipeline for querying PDFs using a local Language Model (LLM) endpoint. The project demonstrates adaptive PDF chunking, vector store retrieval, LLM-based re-ranking, and final prompt construction to answer questions using only the provided context from the PDF.
-
-This project was developed as part of an interview case study and leverages several open-source libraries including [LangChain](https://github.com/hwchase17/langchain), [Gradio](https://gradio.app/), and [FAISS](https://github.com/facebookresearch/faiss).
+This repository contains a custom implementation of a Retrieval-Augmented Generation (RAG) pipeline for querying PDFs using a local Language Model (LLM) endpoint that was deployed using LM Studio. The project demonstrates adaptive PDF chunking, vector store retrieval, LLM-based re-ranking, and final prompt construction to answer questions using only the provided context from the PDF.
 
 ## Features
 
@@ -24,11 +22,8 @@ This project was developed as part of an interview case study and leverages seve
 - **Context-Aware Answering with Citations:**  
   Constructs a final prompt that includes relevant context along with page citations, ensuring that answers are traceable and verifiable against the source PDF.
 
-- **Caching:**  
-  Utilizes LangChain's in-memory caching to avoid redundant LLM calls, enhancing the overall efficiency of the pipeline.
-
 - **Interactive Demo with Gradio:**  
-  An optional Gradio interface allows for an interactive PDF chatbot experience, making it easy to demo and test the system.
+  Gradio interface allows for an interactive PDF chatbot experience, making it easy to demo and test the system.
 
 ## Why This Approach is Better
 
@@ -54,11 +49,3 @@ This project was developed as part of an interview case study and leverages seve
 - Python 3.8 or higher
 - A local LLM endpoint running (e.g., at `http://localhost:1234/v1/chat/completions`)
 - Necessary Python packages (see [Installation](#installation))
-
-### Installation
-
-1. **Clone the Repository:**
-
-   ```bash
-   git clone https://github.com/yourusername/pdf-chatbot-rag.git
-   cd pdf-chatbot-rag
