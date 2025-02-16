@@ -48,4 +48,4 @@ This repository contains a custom implementation of a Retrieval-Augmented Genera
 
 - Python 3.8 or higher
 - A local LLM endpoint running (e.g., at `http://localhost:1234/v1/chat/completions`)
-- Necessary Python packages (see [Installation](#installation))
+- Necessary Python packages (see requirements file)
